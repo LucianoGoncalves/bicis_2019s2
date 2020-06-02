@@ -1,0 +1,59 @@
+import bicis.*
+import accesorios.*
+import deposito.*
+
+test "test bicis" {
+    const faro = new Farolito()
+    const bici1 = new Bici(rodado = 28, largo = 150, marca = "Olmo")
+    bici1.accesorio(faro)
+    
+    const cana1 = new Canasto(volumen = 8)
+    const morral1 = new MorralDeBici(largo = 21, tieneOjoDeGato = true)
+    const bici2 = new Bici(rodado = 26, largo = 110, marca = "Legano")
+    bici2.accesorio(faro)
+    bici2.accesorio(cana1)
+    bici2.accesorio(morral1)
+    
+    const morral2 = new MorralDeBici(largo = 6, tieneOjoDeGato = false)
+    const bici3 = new Bici(rodado = 20, largo = 90, marca = "Legano")
+    bici3.accesorio(morral2)
+    
+    const bici4 = new Bici(rodado = 26, largo = 115, marca = "Legano")
+    
+    
+    assert.equals(85, bici1.altura())
+    assert.equals(34, bici1.velocidadDeCrucero())
+    assert.equals(0, bici1.carga())
+    assert.equals(14.5, bici1.peso())
+    assert.that(bici1.tieneLuz())
+    assert.equals(1, bici1.cantidadDeAccesoriosLivianos())
+    assert.that(bici1.accesorios() == [faro])
+    assert.equals(1, bici1.cantidadDeAccesorios())
+    
+    assert.equals(80, bici2.altura())
+    assert.equals(28, bici2.velocidadDeCrucero())
+    assert.equals(23, bici2.carga())
+    assert.equals(15.5, bici2.peso())
+    assert.that(bici2.tieneLuz())
+    assert.equals(2, bici2.cantidadDeAccesoriosLivianos())
+    assert.that(bici2.accesorios() == [faro, cana1, morral1])
+    assert.equals(3, bici2.cantidadDeAccesorios())
+    
+    assert.equals(65, bici3.altura())
+    assert.equals(22, bici3.velocidadDeCrucero())
+    assert.equals(2, bici3.carga())
+    assert.equals(11.2, bici3.peso())
+    assert.notThat(bici3.tieneLuz())
+    assert.equals(0, bici3.cantidadDeAccesoriosLivianos())
+    assert.that(bici3.accesorios() == [morral2])
+    assert.equals(1, bici3.cantidadDeAccesorios())    
+
+    assert.equals(80, bici4.altura())
+    assert.equals(28, bici4.velocidadDeCrucero())
+    assert.equals(0, bici4.carga())
+    assert.equals(13, bici4.peso())
+    assert.notThat(bici4.tieneLuz())
+    assert.equals(0, bici4.cantidadDeAccesoriosLivianos())
+    assert.that(bici4.accesorios() == [])
+    assert.equals(0, bici4.cantidadDeAccesorios())    
+}

@@ -1,0 +1,41 @@
+import bicis.*
+import accesorios.*
+import deposito.*
+
+test "test deposito" {
+    const faro = new Farolito()
+    const bici1 = new Bici(rodado = 28, largo = 150, marca = "Olmo")
+    bici1.accesorio(faro)
+    
+    const cana1 = new Canasto(volumen = 8)
+    const morral1 = new MorralDeBici(largo = 21, tieneOjoDeGato = true)
+    const bici2 = new Bici(rodado = 26, largo = 110, marca = "Legano")
+    bici2.accesorio(faro)
+    bici2.accesorio(cana1)
+    bici2.accesorio(morral1)
+    
+    const morral2 = new MorralDeBici(largo = 6, tieneOjoDeGato = false)
+    const bici3 = new Bici(rodado = 20, largo = 90, marca = "Legano")
+    bici3.accesorio(morral2)
+    
+    const bici4 = new Bici(rodado = 26, largo = 115, marca = "Legano")
+    
+    const depo1 = new Deposito()
+    depo1.agregar(bici1)
+    depo1.agregar(bici2)
+    depo1.agregar(bici3)
+    depo1.agregar(bici4)
+    
+    assert.notThat(depo1.bicisRapidas())
+    assert.that(depo1.marca() == #{"Olmo", "Legano"})
+    assert.notThat(depo1.esNocturno())
+    assert.that(depo1.hayBicicletaParaLlevar(20))
+    assert.notThat(depo1.hayBicicletaParaLlevar(28))
+    assert.that(depo1.marcaMasRapida() == "Olmo")
+    assert.equals(0, depo1.cargaTotalDeBicisLargas())
+    assert.notEquals(23, depo1.cargaTotalDeBicisLargas())
+    assert.equals(1, depo1.cantBicisSinAcce())
+    assert.notEquals(3, depo1.cantBicisSinAcce())
+    assert.that(depo1.biciCompaniera(bici2) == [bici4])
+    assert.notThat(depo1.biciCompaniera(bici2) == [bici3])
+}
